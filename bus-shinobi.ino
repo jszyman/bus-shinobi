@@ -8,6 +8,11 @@
   http://www.arduino.cc/en/Tutorial/DigitalReadSerial
 */
 
+#define CMD_LEN 5u
+char cmd_buf[CMD_LEN + 1];
+bool doIt = 0;
+
+
 // digital pin 2 has a pushbutton attached to it. Give it a name:
 int pushButton = 2;
 const int ledPin =  13;      // the number of the LED pin
@@ -15,7 +20,6 @@ const int ledPin =  13;      // the number of the LED pin
 // variables will change:
 int buttonState = 0;         // variable for reading the pushbutton status
 
-// the setup routine runs once when you press reset:
 void setup() {
   // initialize serial communication at 9600 bits per second:
   Serial.begin(9600);
@@ -25,19 +29,21 @@ void setup() {
   pinMode(ledPin, OUTPUT);
 }
 
-// the loop routine runs over and over again forever:
 void loop() {
-  // read the input pin:
-  int buttonState = digitalRead(pushButton);
-    // check if the pushbutton is pressed. If it is, the buttonState is HIGH:
-  if (buttonState == HIGH) {
-    // turn LED on:
-    digitalWrite(ledPin, HIGH);
-  } else {
-    // turn LED off:
-    digitalWrite(ledPin, LOW);
+  // read command from serial
+  if (Serial.available() == CMD_LEN)
+  {
+      Serial.readBytes(cmd_buf, CMD_LEN);
+      doIt = 1;
   }
-  // print out the state of the button:
-  Serial.println(buttonState);
-  delay(1000);        // delay in between reads for stability
+  if (doIt == 1)
+  {
+    // parse command
+    // execute command
+    // respond to host
+    Serial.write(cmd_buf, CMD_LEN);
+    delay(100);
+    doIt = 0;    
+  }
+
 }
