@@ -9,7 +9,7 @@
 */
 
 #define CMD_LEN 5u
-char cmd_buf[CMD_LEN + 1];
+char cmd_buf[CMD_LEN + 1] = {0};
 bool doIt = 0;
 
 
@@ -39,10 +39,18 @@ void loop() {
   if (doIt == 1)
   {
     // parse command
+    if(cmd_buf[4] == 'H')
+    {
+      digitalWrite(ledPin, HIGH);
+    }
+    else if (cmd_buf[4] == 'L')
+    {
+      digitalWrite(ledPin, LOW);
+    }
+    else { /* do nothing */}
     // execute command
     // respond to host
     Serial.write(cmd_buf, CMD_LEN);
-    delay(100);
     doIt = 0;    
   }
 
