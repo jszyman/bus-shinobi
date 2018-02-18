@@ -27,6 +27,7 @@ void setup() {
   pinMode(pushButton, INPUT);
   // initialize the LED pin as an output:
   pinMode(ledPin, OUTPUT);
+  doIt = 0;
 }
 
 void loop() {
