@@ -6,7 +6,7 @@ import time
 
 ser = serial.Serial('COM16', 9600, timeout=1, parity=serial.PARITY_NONE)  # open serial port
 print("Opened: " + ser.name)         # check which port was really used
-time.sleep(5)
+time.sleep(1)
 loops = 10
 while loops:
     num_written = ser.write( b'WD13H')     # write a string
