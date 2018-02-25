@@ -20,13 +20,13 @@ const int ledDigitalPin =  13;      // the number of the LED pin
 int buttonState = 0;         // variable for reading the pushbutton status
 
 void setup() {
-  // initialize serial communication at 9600 bits per second:
-  Serial.begin(9600);
-  // make the pushbutton's pin an input:
-  pinMode(pushButton, INPUT);
-  // initialize the LED pin as an output:
-  pinMode(ledDigitalPin, OUTPUT);
-  doIt = 0;
+    pinMode(pushButton, INPUT);
+    pinMode(ledDigitalPin, OUTPUT);
+    pinMode(ledPwmPin, OUTPUT);
+
+    doIt = 0;
+  
+    Serial.begin(9600);
 }
 
 void loop() {
@@ -57,6 +57,7 @@ void CMD_generalParse(char * cmd, unsigned char len)
     }
     else if (kind == 'A')
     {
+        CMD_analogParse(cmd, len);
     }
     else
     {
@@ -83,4 +84,7 @@ void CMD_digitalParse(char * cmd, unsigned char len)
 
 void CMD_analogParse(char * cmd, unsigned char len)
 {
+    int duty;
+    duty = (255 * ( cmd[4] - '0' )) / 9;
+    analogWrite(ledPwmPin, duty);
 }
