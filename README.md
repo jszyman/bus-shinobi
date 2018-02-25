@@ -8,5 +8,8 @@ Host communication via HW Serial of Arduino Uno: 9600-8-1-N
 
 ### ToDo:
 * Add command support:
+	* WA10?, WA11? - Write Analog pin10, pin11
 	* RD13x - Read state of Digital pin 13
+* support for RGB LEDs with common anode and cathode
+* Check correctness of pin and duty values in CMD_analogParse()
 

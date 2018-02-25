@@ -1,6 +1,7 @@
 
-#python3 script, requires pyserial package
-#python -m pip install pyserial
+# python3 script, requires pyserial package
+# python -m pip install pyserial
+# assumes LED cathode is connected to pin 09
 import serial
 import time
 
