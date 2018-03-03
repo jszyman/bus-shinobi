@@ -4,15 +4,16 @@ https://www.arduino.cc/en/tutorial/blink
 
 Reads a digital input on pin 2, prints the result to the Serial Monitor
 http://www.arduino.cc/en/Tutorial/DigitalReadSerial
+
+Turns on the built-in LED on pin 13 when you press the button.
+https://www.arduino.cc/en/Tutorial/Button
 */
 
 #define CMD_LEN 5u
 char cmd_buf[CMD_LEN + 1] = {0};
 bool doIt = 0;
 
-
-// digital pin 2 has a pushbutton attached to it. Give it a name:
-int pushButton = 2;
+const int pushButtonPin = 2;
 const int ledPwmRedPin = 9;
 const int ledPwmGrnPin = 10;
 const int ledPwmBluPin = 11;
@@ -22,7 +23,7 @@ const int ledDigitalPin =  13;      // the number of the LED pin
 int buttonState = 0;         // variable for reading the pushbutton status
 
 void setup() {
-    pinMode(pushButton, INPUT);
+    pinMode(pushButtonPin, INPUT);
     pinMode(ledDigitalPin, OUTPUT);
     pinMode(ledPwmRedPin, OUTPUT);
     digitalWrite(ledPwmRedPin, HIGH);
@@ -56,39 +57,50 @@ void loop() {
 
 void CMD_generalParse(char * cmd, unsigned char len)
 {
+    char direction = cmd[0];
     char kind = cmd[1];
-    if(kind == 'D')
+    
+    if(direction == 'W')
     {
-        CMD_digitalParse(cmd, len);
+        if(kind == 'D')
+        {
+            CMD_writeDigitalParse(cmd, len);
+        }
+        else if (kind == 'A')
+        {
+            CMD_writeAnalogParse(cmd, len);
+        }
+        else
+        { /* do nothing */ }
     }
-    else if (kind == 'A')
+    else if (direction == 'R')
     {
-        CMD_analogParse(cmd, len);
+        if (kind == 'D')
+        {
+            CMD_readDigital(cmd, len);
+        }
+        else
+        { /* do nothing */ }
     }
     else
-    {
-        /* do nothing */
-    }
-
+    { /* do nothning */ }
 }
 
-void CMD_digitalParse(char * cmd, unsigned char len)
+void CMD_writeDigitalParse(char * cmd, unsigned char len)
 {
     if(cmd[4] == 'H')
     {
-      digitalWrite(ledDigitalPin, HIGH);
+        digitalWrite(ledDigitalPin, HIGH);
     }
     else if (cmd[4] == 'L')
     {
-      digitalWrite(ledDigitalPin, LOW);
+        digitalWrite(ledDigitalPin, LOW);
     }
     else 
-    {
-        /* do nothing */
-    }
+    { /* do nothing */ }
 }
 
-void CMD_analogParse(char * cmd, unsigned char len)
+void CMD_writeAnalogParse(char * cmd, unsigned char len)
 {
     int duty;
     int pin;
@@ -96,6 +108,14 @@ void CMD_analogParse(char * cmd, unsigned char len)
     pin = (ascii2digit(cmd[2]) * 10) + ascii2digit(cmd[3]);
     duty = (255 * (ascii2digit( cmd[4] ) ) ) / 9;
     analogWrite(pin, duty);
+}
+
+void CMD_readDigital(char * cmd, unsigned char len)
+{
+    int state;
+    
+    state = digitalRead(pushButtonPin);
+    cmd[4] = state == HIGH ? 'H' : 'L';
 }
 
 unsigned char ascii2digit(char c)
