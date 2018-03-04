@@ -13,6 +13,9 @@ Host communication via HW Serial of Arduino Uno: 9600-8-1-N
 
 See .\example folder for usage examples
 
+### Build
+Project can be built with Sloeber, the Eclipse Arduino IDE - https://eclipse.baeyens.it/
+
 ### ToDo:
 * Add command support:
 	* UART Tx/Rx
