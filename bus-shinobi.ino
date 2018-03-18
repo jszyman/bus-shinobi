@@ -19,6 +19,7 @@ char cmdBuf[CMD_LEN_MAX] = {0};
 bool doIt = 0;
 
 void setup() {
+	analogInPin = A0;
     pinMode(pushButtonPin, INPUT);
     pinMode(ledDigitalPin, OUTPUT);
     pinMode(ledPwmRedPin, OUTPUT);

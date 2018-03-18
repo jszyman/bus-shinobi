@@ -1,5 +1,7 @@
 
+#include <stdlib.h>
 #include <ctype.h>
+#include <string.h>
 #include "arduino.h"
 #include "commands.h"
 
@@ -34,6 +36,10 @@ void CMD_generalParse(char * cmd, unsigned char len)
         if (kind == 'D')
         {
             CMD_readDigital(cmd, len);
+        }
+        else if (kind == 'A')
+        {
+        	CMD_readAnalog(cmd, len);
         }
         else
         { /* do nothing */ }
@@ -73,6 +79,15 @@ void CMD_readDigital(char * cmd, unsigned char len)
     state = digitalRead(pushButtonPin);
     cmd[4] = state == HIGH ? 'H' : 'L';
     cmd[5] = '\0';    // terminate response string
+}
+
+void CMD_readAnalog(char * cmd, unsigned char len)
+{
+	unsigned int adcRead;
+
+	adcRead = analogRead(analogInPin);
+	memset(&cmd[4], '\0', 5); //proper termination of any 0 - 1024 value string
+	itoa(adcRead, &cmd[4], 10);
 }
 
 void cmd2upper(char * cmd)

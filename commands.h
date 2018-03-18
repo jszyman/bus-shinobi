@@ -5,7 +5,7 @@
 extern "C"{
 #endif
 
-
+int analogInPin;
 const int pushButtonPin = 2;
 const int ledPwmRedPin = 9;
 const int ledPwmGrnPin = 10;
@@ -16,6 +16,7 @@ void CMD_generalParse(char * cmd, unsigned char len);
 void CMD_writeDigitalParse(char * cmd, unsigned char len);
 void CMD_writeAnalogParse(char * cmd, unsigned char len);
 void CMD_readDigital(char * cmd, unsigned char len);
+void CMD_readAnalog(char * cmd, unsigned char len);
 
 #ifdef __cplusplus
 } /* extern "C" */
