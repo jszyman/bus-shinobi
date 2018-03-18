@@ -12,8 +12,10 @@ https://www.arduino.cc/en/Tutorial/Button
 #include "arduino.h"
 #include "commands.h"
 
-#define CMD_LEN 5u
-char cmd_buf[CMD_LEN + 1] = {0};
+#define CMD_LEN_MAX SERIAL_RX_BUFFER_SIZE
+char cmdBuf[CMD_LEN_MAX] = {0};
+
+/* indicates action is required according to received command */
 bool doIt = 0;
 
 void setup() {
@@ -32,19 +34,19 @@ void setup() {
 }
 
 void loop() {
-  // read command from serial
-  if (Serial.available() == CMD_LEN)
-  {
-      Serial.readBytes(cmd_buf, CMD_LEN);
-      doIt = 1;
-  }
-  if (doIt == 1)
-  {
-    // parse and execute command
-    CMD_generalParse(cmd_buf, CMD_LEN);
-    // respond to host
-    Serial.write(cmd_buf, CMD_LEN);
-    doIt = 0;    
-  }
+
+	if (Serial.available() > 0)
+	{
+		Serial.readBytesUntil('\n', cmdBuf, CMD_LEN_MAX);
+		doIt = 1;
+	}
+	if (doIt == 1)
+	{
+		// parse and execute command
+		CMD_generalParse(cmdBuf, CMD_LEN_MAX);
+		// respond to host
+		Serial.println(cmdBuf);
+		doIt = 0;
+	}
 
 }

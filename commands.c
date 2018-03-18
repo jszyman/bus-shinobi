@@ -1,12 +1,21 @@
 
+#include <ctype.h>
 #include "arduino.h"
 #include "commands.h"
 
+void cmd2upper(char * cmd);
+unsigned char ascii2digit(char c);
+
+
 void CMD_generalParse(char * cmd, unsigned char len)
 {
-    char direction = cmd[0];
-    char kind = cmd[1];
+    char direction;
+    char kind;
 
+    cmd2upper(cmd);
+
+    direction = cmd[0];
+    kind = cmd[1];
     if(direction == 'W')
     {
         if(kind == 'D')
@@ -63,6 +72,18 @@ void CMD_readDigital(char * cmd, unsigned char len)
 
     state = digitalRead(pushButtonPin);
     cmd[4] = state == HIGH ? 'H' : 'L';
+    cmd[5] = '\0';    // terminate response string
+}
+
+void cmd2upper(char * cmd)
+{
+	int i = 0;
+
+	while(cmd[i] != '\n')
+	{
+		cmd[i] = toupper(cmd[i]);
+		i++;
+	}
 }
 
 unsigned char ascii2digit(char c)

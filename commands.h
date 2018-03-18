@@ -16,7 +16,6 @@ void CMD_generalParse(char * cmd, unsigned char len);
 void CMD_writeDigitalParse(char * cmd, unsigned char len);
 void CMD_writeAnalogParse(char * cmd, unsigned char len);
 void CMD_readDigital(char * cmd, unsigned char len);
-unsigned char ascii2digit(char c);
 
 #ifdef __cplusplus
 } /* extern "C" */
