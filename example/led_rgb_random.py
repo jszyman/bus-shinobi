@@ -58,4 +58,21 @@ while loops:
     time.sleep(0.1)
     loops -= 1
     
+#return to default
+cmd_send = cmdPwmRed + bytearray( str(9), encoding='ascii') + bytearray('\n', encoding='ascii')
+num_written = ser.write(cmd_send)
+print("Tx:\t" + str(num_written) + ":\t" + str(cmd_send) )
+buf = ser.readline()
+print("Rx:\t\t" + str(buf))
+cmd_send = cmdPwmGrn + bytearray( str(9), encoding='ascii') + bytearray('\n', encoding='ascii')
+num_written = ser.write(cmd_send)
+print("Tx:\t" + str(num_written) + ":\t" + str(cmd_send) )
+buf = ser.readline()
+print("Rx:\t\t" + str(buf))
+cmd_send = cmdPwmBlu + bytearray( str(9), encoding='ascii') + bytearray('\n', encoding='ascii')
+num_written = ser.write(cmd_send)
+print("Tx:\t" + str(num_written) + ":\t" + str(cmd_send) )
+buf = ser.readline()
+print("Rx:\t\t" + str(buf))
+    
 ser.close()             # close port
