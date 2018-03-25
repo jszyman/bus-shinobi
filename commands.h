@@ -6,7 +6,7 @@ extern "C"{
 #endif
 
 int analogInPin;
-const int pushButtonPin = 2;
+const int pushButtonPin = 8;
 const int ledPwmRedPin = 9;
 const int ledPwmGrnPin = 10;
 const int ledPwmBluPin = 11;

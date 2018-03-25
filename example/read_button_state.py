@@ -10,7 +10,7 @@ time.sleep(2)                   # unable to use serial port w/o sleep, maybe che
 
 loops = 100
 while loops:
-    num_written = ser.write( b'RD02x\n')
+    num_written = ser.write( b'RD08x\n')
     #print("Tx:\t" + str(num_written) + ":\t" + str( b'RD02x\n') )
     buf = ser.readline()
     print("Rx:\t" + str(buf))
