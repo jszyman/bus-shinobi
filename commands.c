@@ -50,13 +50,17 @@ void CMD_generalParse(char * cmd, unsigned char len)
 
 void CMD_writeDigitalParse(char * cmd, unsigned char len)
 {
+    int pin;
+
+    pin = (ascii2digit(cmd[2]) * 10) + ascii2digit(cmd[3]);
+
     if(cmd[4] == 'H')
     {
-        digitalWrite(ledDigitalPin, HIGH);
+        digitalWrite(pin, HIGH);
     }
     else if (cmd[4] == 'L')
     {
-        digitalWrite(ledDigitalPin, LOW);
+        digitalWrite(pin, LOW);
     }
     else
     { /* do nothing */ }

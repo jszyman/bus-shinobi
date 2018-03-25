@@ -20,11 +20,15 @@ Project can be built with Sloeber, the Eclipse Arduino IDE - https://eclipse.bae
 
 ### ToDo:
 * Add command support:
-	* UART Tx/Rx
-	* SPI Tx/Rx
-	* I2C Tx/Rx
-	* HD44780 display
-	* N3310 display
+	* WHxxyz\n - Write Hexadicimal digit to digital pins 0 - 7 to show on LED segmented display (CA) where:
+		* xx - can be from '00' to '07' or '13'
+		* y - is hexadecimal digit 0 - 9, A - F
+		* z - when = '.' or ',' then dot is On
+	* UART Tx/Rx (WU, RU)
+	* SPI Tx/Rx (WS, RS)
+	* I2C Tx/Rx (WI, RI)
+	* HD44780 display (WL)
+	* N3310 display (WG)
 * split arduino sketch into multiple source files
 * support for RGB LEDs with common anode and cathode
 * Check correctness of pin and duty values in CMD_analogParse()

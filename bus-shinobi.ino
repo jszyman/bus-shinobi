@@ -20,8 +20,27 @@ bool doIt = 0;
 
 void setup() {
 	analogInPin = A0;
-    pinMode(pushButtonPin, INPUT);
+
+	pinMode(ledSegmA, OUTPUT);
+	pinMode(ledSegmB, OUTPUT);
+	pinMode(ledSegmC, OUTPUT);
+	pinMode(ledSegmD, OUTPUT);
+	pinMode(ledSegmE, OUTPUT);
+	pinMode(ledSegmF, OUTPUT);
+	pinMode(ledSegmG, OUTPUT);
+	pinMode(ledSegmDP, OUTPUT);
+	digitalWrite(ledSegmA, HIGH);
+	digitalWrite(ledSegmB, HIGH);
+	digitalWrite(ledSegmC, HIGH);
+	digitalWrite(ledSegmD, HIGH);
+	digitalWrite(ledSegmE, HIGH);
+	digitalWrite(ledSegmF, HIGH);
+	digitalWrite(ledSegmG, HIGH);
+	digitalWrite(ledSegmDP, HIGH);
+
+	pinMode(pushButtonPin, INPUT);
     pinMode(ledDigitalPin, OUTPUT);
+
     pinMode(ledPwmRedPin, OUTPUT);
     digitalWrite(ledPwmRedPin, HIGH);
     pinMode(ledPwmGrnPin, OUTPUT);
