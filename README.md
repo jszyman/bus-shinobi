@@ -20,8 +20,9 @@ Project can be built with Sloeber, the Eclipse Arduino IDE - https://eclipse.bae
 
 ### ToDo:
 * Add command support:
-	* WHxxyz\n - Write Hexadicimal digit to digital pins 0 - 7 to show on LED segmented display (CA) where:
-		* xx - can be from '00' to '07' or '13'
+	* WHxxyz\n - Write Hexadicimal digit to segmented LED display (CA) where:
+		* xx - digital pin number connected to segment A, can be from '02' to '06'
+				next segments shall be connected to following pins
 		* y - is hexadecimal digit 0 - 9, A - F
 		* z - when = '.' or ',' then dot is On
 	* UART Tx/Rx (WU, RU)

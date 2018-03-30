@@ -7,6 +7,7 @@
 
 void cmd2upper(char * cmd);
 unsigned char ascii2digit(char c);
+uint8_t getPinNumber(uint8_t * cmdPin);
 
 
 void CMD_generalParse(char * cmd, unsigned char len)
@@ -27,6 +28,10 @@ void CMD_generalParse(char * cmd, unsigned char len)
         else if (kind == 'A')
         {
             CMD_writeAnalogParse(cmd, len);
+        }
+        else if (kind == 'H')
+        {
+            CMD_writeHexValue(cmd, len);
         }
         else
         { /* do nothing */ }
@@ -76,6 +81,26 @@ void CMD_writeAnalogParse(char * cmd, unsigned char len)
     analogWrite(pin, duty);
 }
 
+void CMD_writeHexValue(char * cmd, unsigned char len)
+{
+	/* hex values of pin states used for control segment LED displaying
+	 * values 0 - 9 and A - F */
+	unsigned char hexCodes[] = {0xC0, 0xF9, 0xA4, 0xB0, 0x99, 0x92, 0x82, 0xF8,
+								0x80, 0x90, 0x88, 0x83, 0xC6, 0xA1, 0x86, 0x8E};
+
+	uint8_t startPin = 2;
+	uint8_t hexCode = 0;
+	uint8_t pinState = LOW;
+
+	startPin = getPinNumber( (uint8_t *)&cmd[2] );
+	hexCode = hexCodes[ ascii2digit(cmd[4]) ];
+
+	for (int i = startPin; i < startPin + 8; i++)
+	{
+		digitalWrite(i, pinState);
+	}
+}
+
 void CMD_readDigital(char * cmd, unsigned char len)
 {
     int state;
@@ -110,5 +135,10 @@ unsigned char ascii2digit(char c)
     if (c >= '0' && c <= '9')
         return (c - '0');
     else
-        return '0';
+        return 0;
+}
+
+uint8_t getPinNumber(uint8_t * cmdPin)
+{
+	return (ascii2digit(cmdPin[0]) * 10) + ascii2digit(cmdPin[1]);
 }

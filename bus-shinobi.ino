@@ -37,7 +37,7 @@ void setup() {
 	digitalWrite(ledSegmF, HIGH);
 	digitalWrite(ledSegmG, HIGH);
 	digitalWrite(ledSegmDP, HIGH);
-
+#if 0
 	pinMode(pushButtonPin, INPUT);
     pinMode(ledDigitalPin, OUTPUT);
 
@@ -47,7 +47,7 @@ void setup() {
     digitalWrite(ledPwmGrnPin, HIGH);
     pinMode(ledPwmBluPin, OUTPUT);
     digitalWrite(ledPwmBluPin, HIGH);
-
+#endif
     doIt = 0;
   
     Serial.begin(9600);
