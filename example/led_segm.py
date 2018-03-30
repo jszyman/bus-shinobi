@@ -15,16 +15,7 @@ print("Opened: " + ser.name)    # check which port was really used
 time.sleep(2)                   # unable to use serial port w/o sleep, maybe check with ser.isOpen()?
 
 hexDigits = [0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x41, 0x42, 0x43, 0x44, 0x45, 0x46]
-led_segm_cmd = bytearray(b'WH020\n')
-
-digit = 0
-loops = 10
-while loops:
-    led_segm_cmd[4] = hexDigits[digit]
-    send_bs_command(led_segm_cmd)
-    digit += 1
-    time.sleep(0.5)
-    loops -= 1
+led_segm_cmd = bytearray(b'WH020_\n')
 
 digit = 0
 loops = 16
@@ -34,6 +25,16 @@ while loops:
     digit += 1
     time.sleep(0.5)
     loops -= 1
- 
+
+led_segm_cmd[5] = 46 # change '_' to '.'
+digit = 0
+loops = 16 
+while loops:
+    led_segm_cmd[4] = hexDigits[digit]
+    send_bs_command(led_segm_cmd)
+    digit += 1
+    time.sleep(0.5)
+    loops -= 1
+
  
 ser.close()

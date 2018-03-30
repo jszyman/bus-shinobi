@@ -86,16 +86,23 @@ void CMD_writeHexValue(char * cmd, unsigned char len)
 {
 	/* hex values of pin states used for control segment LED displaying
 	 * values 0 - 9 and A - F */
-	unsigned char hexCodes[] = {0xC0, 0xF9, 0xA4, 0xB0, 0x99, 0x92, 0x82, 0xF8,
-								0x80, 0x90, 0x88, 0x83, 0xC6, 0xA1, 0x86, 0x8E};
+	uint8_t hexCodes[] = {0xC0, 0xF9, 0xA4, 0xB0, 0x99, 0x92, 0x82, 0xF8,
+						  0x80, 0x90, 0x88, 0x83, 0xC6, 0xA1, 0x86, 0x8E};
 
 	uint8_t startPin = 2;
 	uint8_t hexCode = 0;
-	uint8_t pinState = 0;
+	uint8_t pinState = 1;
 
 	startPin = getPinNumber( (uint8_t *)&cmd[2] );
 	hexCode = hexCodes[ ascii2hexDigit(cmd[4]) ];
 
+	if (cmd[5] == '.' || cmd[5] == ',')
+	{
+		/* clear MSbit when dot shall be ON */
+		hexCode &= 0x7FU;
+	}
+
+	/* drive pins */
 	for (int i = 0; i < 8; i++)
 	{
 		pinState = (hexCode >> i) & 1U;
