@@ -7,6 +7,7 @@
 
 void cmd2upper(char * cmd);
 unsigned char ascii2digit(char c);
+uint8_t ascii2hexDigit(char c);
 uint8_t getPinNumber(uint8_t * cmdPin);
 
 
@@ -90,14 +91,15 @@ void CMD_writeHexValue(char * cmd, unsigned char len)
 
 	uint8_t startPin = 2;
 	uint8_t hexCode = 0;
-	uint8_t pinState = LOW;
+	uint8_t pinState = 0;
 
 	startPin = getPinNumber( (uint8_t *)&cmd[2] );
-	hexCode = hexCodes[ ascii2digit(cmd[4]) ];
+	hexCode = hexCodes[ ascii2hexDigit(cmd[4]) ];
 
-	for (int i = startPin; i < startPin + 8; i++)
+	for (int i = 0; i < 8; i++)
 	{
-		digitalWrite(i, pinState);
+		pinState = (hexCode >> i) & 1U;
+		digitalWrite(i + startPin, pinState);
 	}
 }
 
@@ -136,6 +138,18 @@ unsigned char ascii2digit(char c)
         return (c - '0');
     else
         return 0;
+}
+
+uint8_t ascii2hexDigit(char c)
+{
+	if (c >= '0' && c <= '9')
+		return ascii2digit(c);
+	else if (c >= 'a' && c <= 'f')
+		return (c - 'a' + 0xA);
+	else if (c >= 'A' && c <= 'F')
+		return c - 'A' + 0xA;
+	else
+		return 0;
 }
 
 uint8_t getPinNumber(uint8_t * cmdPin)

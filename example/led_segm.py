@@ -14,31 +14,26 @@ ser = serial.Serial('COM16', 9600, timeout=1, parity=serial.PARITY_NONE)  # open
 print("Opened: " + ser.name)    # check which port was really used
 time.sleep(2)                   # unable to use serial port w/o sleep, maybe check with ser.isOpen()?
 
-led_segmC_on_cmd = b'WD02L\n'
-led_segmC_off_cmd = b'WD02H\n'
-led_segmD_on_cmd = b'WD03L\n'
-led_segmD_off_cmd = b'WD03H\n'
-led_segmE_on_cmd = b'WD04L\n'
-led_segmE_off_cmd = b'WD04H\n'
-led_segmF_on_cmd = b'WD05L\n'
-led_segmF_off_cmd = b'WD05H\n'
-led_segmG_on_cmd = b'WD06L\n'
-led_segmG_off_cmd = b'WD06H\n'
+hexDigits = [0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x41, 0x42, 0x43, 0x44, 0x45, 0x46]
+led_segm_cmd = bytearray(b'WH020\n')
 
+digit = 0
 loops = 10
 while loops:
-    send_bs_command(led_segmC_on_cmd)
-    send_bs_command(led_segmD_on_cmd)
-    send_bs_command(led_segmE_on_cmd)
-    send_bs_command(led_segmF_on_cmd)
-    send_bs_command(led_segmG_on_cmd)
-    time.sleep(1.0)
-    send_bs_command(led_segmC_off_cmd)
-    send_bs_command(led_segmD_off_cmd)
-    send_bs_command(led_segmE_off_cmd)
-    send_bs_command(led_segmF_off_cmd)
-    send_bs_command(led_segmG_off_cmd)
-    time.sleep(1.0)
+    led_segm_cmd[4] = hexDigits[digit]
+    send_bs_command(led_segm_cmd)
+    digit += 1
+    time.sleep(0.5)
     loops -= 1
 
+digit = 0
+loops = 16
+while loops:
+    led_segm_cmd[4] = hexDigits[digit]
+    send_bs_command(led_segm_cmd)
+    digit += 1
+    time.sleep(0.5)
+    loops -= 1
+ 
+ 
 ser.close()
