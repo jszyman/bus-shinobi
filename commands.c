@@ -1,7 +1,7 @@
 
-#include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
+#include <stdio.h>
 #include "arduino.h"
 #include "commands.h"
 
@@ -121,11 +121,11 @@ void CMD_readDigital(char * cmd, unsigned char len)
 
 void CMD_readAnalog(char * cmd, unsigned char len)
 {
-	unsigned int adcRead;
+	uint16_t adcRead;
 
 	adcRead = analogRead(analogInPin);
 	memset(&cmd[4], '\0', 5); //proper termination of any 0 - 1024 value string
-	itoa(adcRead, &cmd[4], 10);
+	sprintf(&cmd[4], "%04u", adcRead);
 }
 
 void cmd2upper(char * cmd)
