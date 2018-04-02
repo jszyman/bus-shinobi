@@ -6,7 +6,7 @@
 # red   - 09
 # green - 10
 # blue  - 11
-
+import sys
 import serial
 import time
 import random
@@ -28,7 +28,7 @@ def fade_pwm_pin(cmd_pin = b'WA09'):
         time.sleep(0.05)
 
 
-ser = serial.Serial('COM16', 9600, timeout=1, parity=serial.PARITY_NONE)  # open serial port
+ser = serial.Serial(sys.argv[1], 9600, timeout=1, parity=serial.PARITY_NONE)  # open serial port
 print("Opened: " + ser.name)    # check which port was really used
 time.sleep(2)                   # unable to use serial port w/o sleep, maybe check with ser.isOpen()?
 loops = 100

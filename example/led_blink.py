@@ -1,10 +1,11 @@
 
 #python3 script, requires pyserial package
 #python -m pip install pyserial
+import sys
 import serial
 import time
 
-ser = serial.Serial('COM16', 9600, timeout=1, parity=serial.PARITY_NONE)  # open serial port
+ser = serial.Serial(sys.argv[1], 9600, timeout=1, parity=serial.PARITY_NONE)  # open serial port
 print("Opened: " + ser.name)    # check which port was really used
 time.sleep(2)                   # unable to use serial port w/o sleep, maybe check with ser.isOpen()?
 
