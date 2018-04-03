@@ -25,6 +25,7 @@ Project can be built with Sloeber, the Eclipse Arduino IDE - https://eclipse.bae
 
 ### ToDo:
 * Add command support:
+	* 1-Wire Tx/Rx (WO, RO)
 	* UART Tx/Rx (WU, RU)
 	* SPI Tx/Rx (WS, RS)
 	* I2C Tx/Rx (WI, RI)
